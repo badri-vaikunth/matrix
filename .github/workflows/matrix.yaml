@@ -1,7 +1,7 @@
 name: Docker-Matrix
 on: 
   push:
-  workflow_dispatch:
+  workflow-dispatch:
 
 jobs:
   deploy:
@@ -9,6 +9,12 @@ jobs:
       matrix:
         os: [ubuntu-latest,windows-latest,ubuntu-22.04]
         image: [hello-world,alpine]
+        exclude:
+          - image: alpine
+            os: windows-latest
+        include:
+          - image: nginx
+            os: ubuntu-latest
     runs-on: ${{matrix.os}}
     steps:
     - name: Docker Login
